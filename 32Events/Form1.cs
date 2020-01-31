@@ -21,9 +21,9 @@ namespace _32Events
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Feliratkozunk az esemenyre egy fgv-nyel. Ezt fog lefutni, amikor a esemenyt dobunk.
+            //Feliratkozunk az esemenyre ezzel a fgv-nyel. Ezt fog lefutni, amikor a esemenyt dobunk.
             myClass.OnPropertyChanged += MyClass_OnPropertyChanged;
-
+            //Itt a valtozas, ami dobja az esemenyt
             myClass.Name = "Zoli";
         }
 
