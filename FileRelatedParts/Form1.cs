@@ -25,22 +25,13 @@ namespace FileRelatedParts
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 StreamReader sr = new StreamReader(File.OpenRead(ofd.FileName));
-                //A fajlban levo elso byte-ot adja vissza tizes szamrendszerben
-                //textBox1.Text = sr.BaseStream.ReadByte().ToString();
-                //A fajlban levo elso byte-ot adja vissza hexadecimalis szamrendszerben
-                //textBox1.Text = sr.BaseStream.ReadByte().ToString("x");
+                //Peek() - olvas egy karaktert, es nem lep a kovetkezore
+                //Read() - olvas egy karaktert, es lep a kovetkezore
+                char c =  (char)sr.Peek(); //[0]-t olvassa, utana [0]-n all
+                char c2 = (char)sr.Read(); //[0]-t olvassa, utana [1]-n all
+                char c3 = (char)sr.Read(); //[1]-t olvassa, utana [2]-n all
 
-                //A fajlban levo tobb byte-ot olvasunk bufferbe
-                //Kezdopozicio megadasa: pl. 4-es index, azaz az 5. elem
-                //sr.BaseStream.Position = 4;
-                byte[] myBuffer = new byte[6];
-                //A bufferbe tegye a 2. helytol kezdve (1-es index) 3 db byte-ot.
-                sr.BaseStream.Read(myBuffer, 2, 3);
-                foreach (var aByte in myBuffer)
-                {
-                    textBox1.Text += aByte.ToString("x") + " ";
-                }
-                
+                MessageBox.Show(c.ToString() + ", " + c2.ToString() + ", " + c3.ToString());
                 sr.Dispose();
             } 
         }
