@@ -17,8 +17,8 @@ namespace FileRelatedParts
         {
             InitializeComponent();
         }
-         
-        private void button1_Click(object sender, EventArgs e)
+        //--------- StreamReader --------- 
+        private void Read_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
 
@@ -34,6 +34,28 @@ namespace FileRelatedParts
                 MessageBox.Show(c.ToString() + ", " + c2.ToString() + ", " + c3.ToString());
                 sr.Dispose();
             } 
+        }
+        //--------- StreamWriter ---------
+        string path;
+        private void Open_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Write.Enabled = true;
+                path = ofd.FileName;
+            }
+
+        }
+
+        private void Write_Click(object sender, EventArgs e)
+        {
+            //StreamWriter sw = new StreamWriter(File.OpenWrite(path));
+            StreamWriter sw = new StreamWriter(File.Create(path));
+            sw.WriteLine(textBox2.Text);
+            sw.Write("This is the second line.");
+            sw.Write(" This also gets into the second line.");
+            sw.Dispose();
         }
     }
 }
