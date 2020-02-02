@@ -11,6 +11,7 @@ using System.IO;
 
 namespace FileRelatedParts
 {
+    //Part42
     public partial class Form1 : Form
     {
         public Form1()
@@ -33,15 +34,16 @@ namespace FileRelatedParts
         {
             BinaryReader br = new BinaryReader(File.OpenRead(path));
             br.BaseStream.Position = 3;
+            //olvassuk ki helyes sorrendben az elozo peldaban (41.) kiolvasott Int16, azaz 2 Byte-ot
+            //Ez is ugyanugy a masodik byte-ot teszi elore, mint a ReadInt16()
+            byte[] buffer = br.ReadBytes(2);
+            //1. Megoldas - sajat
+            //buffer.Reverse(); 
+            //foreach (var aByte in buffer) textBox1.Text += aByte.ToString("x");
+            //2. Megoldas
+            Array.Reverse(buffer);
+            textBox1.Text = BitConverter.ToInt16(buffer, 0).ToString("x");
 
-            //1. Egyetlen karakter beolvasasa
-            //textBox1.Text = br.ReadChar().ToString();
-            //2. 4db karaktrt beolvasasa
-            //char[] charsFromFile = br.ReadChars(4);
-            //foreach (var aChar in charsFromFile) textBox1.Text += aChar;
-            //3. Beolvas 2 byte-ot, es 16 bites integerkent ertelmezi little endian sorrendben, azaz jobbrol balra veszi a bajtokat.
-            textBox1.Text = br.ReadInt16().ToString("x");
-            
             br.Dispose();
         }
     }
