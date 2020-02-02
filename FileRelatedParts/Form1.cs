@@ -24,22 +24,25 @@ namespace FileRelatedParts
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Write.Enabled = true;
+                Read.Enabled = true;
                 path = ofd.FileName;
             }
         }
 
-        private void Write_Click(object sender, EventArgs e)
+        private void Read_Click(object sender, EventArgs e)
         {
-            StreamWriter sw = new StreamWriter(File.OpenWrite(path));
-            sw.BaseStream.Position = 0x02; //A 2. indexu byte-ot fogjuk atirni
-           //sw.BaseStream.WriteByte(0xFF);//FF-re
+            BinaryReader br = new BinaryReader(File.OpenRead(path));
+            br.BaseStream.Position = 3;
 
-            byte[] mybuffer = { 0x60, 0x61, 0x62, 0x63, 0x64 };
-            //Tobb byte atirasa a megadott bufferbol, a buffer megadott elemetol kezdve adott darab byte-ot
-            sw.BaseStream.Write(mybuffer, 1, 3);            
-
-            sw.Dispose();
+            //1. Egyetlen karakter beolvasasa
+            //textBox1.Text = br.ReadChar().ToString();
+            //2. 4db karaktrt beolvasasa
+            //char[] charsFromFile = br.ReadChars(4);
+            //foreach (var aChar in charsFromFile) textBox1.Text += aChar;
+            //3. Beolvas 2 byte-ot, es 16 bites integerkent ertelmezi little endian sorrendben, azaz jobbrol balra veszi a bajtokat.
+            textBox1.Text = br.ReadInt16().ToString("x");
+            
+            br.Dispose();
         }
     }
 }
