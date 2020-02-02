@@ -17,25 +17,7 @@ namespace FileRelatedParts
         {
             InitializeComponent();
         }
-        //--------- StreamReader --------- 
-        private void Read_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
 
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                StreamReader sr = new StreamReader(File.OpenRead(ofd.FileName));
-                //Peek() - olvas egy karaktert, es nem lep a kovetkezore
-                //Read() - olvas egy karaktert, es lep a kovetkezore
-                char c =  (char)sr.Peek(); //[0]-t olvassa, utana [0]-n all
-                char c2 = (char)sr.Read(); //[0]-t olvassa, utana [1]-n all
-                char c3 = (char)sr.Read(); //[1]-t olvassa, utana [2]-n all
-
-                MessageBox.Show(c.ToString() + ", " + c2.ToString() + ", " + c3.ToString());
-                sr.Dispose();
-            } 
-        }
-        //--------- StreamWriter ---------
         string path;
         private void Open_Click(object sender, EventArgs e)
         {
@@ -45,16 +27,18 @@ namespace FileRelatedParts
                 Write.Enabled = true;
                 path = ofd.FileName;
             }
-
         }
 
         private void Write_Click(object sender, EventArgs e)
         {
-            //StreamWriter sw = new StreamWriter(File.OpenWrite(path));
-            StreamWriter sw = new StreamWriter(File.Create(path));
-            sw.WriteLine(textBox2.Text);
-            sw.Write("This is the second line.");
-            sw.Write(" This also gets into the second line.");
+            StreamWriter sw = new StreamWriter(File.OpenWrite(path));
+            sw.BaseStream.Position = 0x02; //A 2. indexu byte-ot fogjuk atirni
+           //sw.BaseStream.WriteByte(0xFF);//FF-re
+
+            byte[] mybuffer = { 0x60, 0x61, 0x62, 0x63, 0x64 };
+            //Tobb byte atirasa a megadott bufferbol, a buffer megadott elemetol kezdve adott darab byte-ot
+            sw.BaseStream.Write(mybuffer, 1, 3);            
+
             sw.Dispose();
         }
     }
