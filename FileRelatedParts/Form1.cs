@@ -11,7 +11,7 @@ using System.IO;
 
 namespace FileRelatedParts
 {
-    //Part42
+    //Part43
     public partial class Form1 : Form
     {
         public Form1()
@@ -25,26 +25,29 @@ namespace FileRelatedParts
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Read.Enabled = true;
+                Write.Enabled = true;
                 path = ofd.FileName;
             }
         }
 
-        private void Read_Click(object sender, EventArgs e)
+        private void Write_Click(object sender, EventArgs e)
         {
-            BinaryReader br = new BinaryReader(File.OpenRead(path));
-            br.BaseStream.Position = 3;
-            //olvassuk ki helyes sorrendben az elozo peldaban (41.) kiolvasott Int16, azaz 2 Byte-ot
-            //Ez is ugyanugy a masodik byte-ot teszi elore, mint a ReadInt16()
-            byte[] buffer = br.ReadBytes(2);
-            //1. Megoldas - sajat
-            //buffer.Reverse(); 
-            //foreach (var aByte in buffer) textBox1.Text += aByte.ToString("x");
-            //2. Megoldas
-            Array.Reverse(buffer);
-            textBox1.Text = BitConverter.ToInt16(buffer, 0).ToString("x");
+            BinaryWriter bw = new BinaryWriter(File.OpenWrite(path));
+            bw.BaseStream.Position = 0;
+            //csomo fele tipust irhatunk little endiankent.
+            //bw.Write("a");
+            //bw.Write(3);
+            //bw.Write((short)5);
 
-            br.Dispose();
+            //De normal sorrendben igy irjuk:
+            //byte[] buffer = BitConverter.GetBytes('e'); //break ele egy 00 byte-ot is. Miert?
+            //byte[] buffer = BitConverter.GetBytes(0xEABB1234);
+            //byte[] buffer = BitConverter.GetBytes((short)0xAB);
+            byte[] buffer = BitConverter.GetBytes((short)171);
+            Array.Reverse(buffer);
+            bw.Write(buffer);
+
+            bw.Dispose();
         }
     }
 }

@@ -30,7 +30,7 @@
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.Read = new System.Windows.Forms.Button();
+            this.Write = new System.Windows.Forms.Button();
             this.Open = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -38,7 +38,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.Read);
+            this.groupBox2.Controls.Add(this.Write);
             this.groupBox2.Controls.Add(this.Open);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
@@ -54,16 +54,16 @@
             this.textBox1.Size = new System.Drawing.Size(248, 20);
             this.textBox1.TabIndex = 2;
             // 
-            // Read
+            // Write
             // 
-            this.Read.Enabled = false;
-            this.Read.Location = new System.Drawing.Point(167, 37);
-            this.Read.Name = "Read";
-            this.Read.Size = new System.Drawing.Size(75, 23);
-            this.Read.TabIndex = 1;
-            this.Read.Text = "Read";
-            this.Read.UseVisualStyleBackColor = true;
-            this.Read.Click += new System.EventHandler(this.Read_Click);
+            this.Write.Enabled = false;
+            this.Write.Location = new System.Drawing.Point(167, 37);
+            this.Write.Name = "Write";
+            this.Write.Size = new System.Drawing.Size(75, 23);
+            this.Write.TabIndex = 1;
+            this.Write.Text = "Write";
+            this.Write.UseVisualStyleBackColor = true;
+            this.Write.Click += new System.EventHandler(this.Write_Click);
             // 
             // Open
             // 
@@ -91,7 +91,7 @@
 
         #endregion
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button Read;
+        private System.Windows.Forms.Button Write;
         private System.Windows.Forms.Button Open;
         private System.Windows.Forms.TextBox textBox1;
     }
