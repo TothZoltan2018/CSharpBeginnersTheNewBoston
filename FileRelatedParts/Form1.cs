@@ -11,7 +11,7 @@ using System.IO;
 
 namespace FileRelatedParts
 {
-    //Part43
+    //Part44
     public partial class Form1 : Form
     {
         public Form1()
@@ -19,35 +19,20 @@ namespace FileRelatedParts
             InitializeComponent();
         }
 
-        string path;
-        private void Open_Click(object sender, EventArgs e)
+        private void WriteFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Text File|*.txt";
+            sfd.FileName = "TestText";
+            sfd.Title = "Save Zoli's testfile";
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                Write.Enabled = true;
-                path = ofd.FileName;
+                string path = sfd.FileName;
+                BinaryWriter bw = new BinaryWriter(File.Create(path));
+                bw.Write("Example text file"); //Miert tesz a fajl elejere egy 0x11 (device control 1) karaktert?
+
+                bw.Dispose();
             }
-        }
-
-        private void Write_Click(object sender, EventArgs e)
-        {
-            BinaryWriter bw = new BinaryWriter(File.OpenWrite(path));
-            bw.BaseStream.Position = 0;
-            //csomo fele tipust irhatunk little endiankent.
-            //bw.Write("a");
-            //bw.Write(3);
-            //bw.Write((short)5);
-
-            //De normal sorrendben igy irjuk:
-            //byte[] buffer = BitConverter.GetBytes('e'); //break ele egy 00 byte-ot is. Miert?
-            //byte[] buffer = BitConverter.GetBytes(0xEABB1234);
-            //byte[] buffer = BitConverter.GetBytes((short)0xAB);
-            byte[] buffer = BitConverter.GetBytes((short)171);
-            Array.Reverse(buffer);
-            bw.Write(buffer);
-
-            bw.Dispose();
         }
     }
 }
