@@ -28,6 +28,10 @@ namespace FileRelatedParts
 
                 bool mybool = Convert.ToBoolean("true");
                 MessageBox.Show(mybool.ToString());
+
+                MessageBox.Show(Convert.ToInt32(3.678).ToString());
+
+                //Es igy tovabb szinte mindenbol minedent a jozan esz hatarain belul.
             }
             catch
             {
