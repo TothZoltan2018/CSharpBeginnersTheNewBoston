@@ -11,7 +11,7 @@ using System.IO;
 
 namespace FileRelatedParts
 {
-    //Part45
+    //Part47- Is, as and Casting
     public partial class Form1 : Form
     {
         public Form1()
@@ -21,22 +21,26 @@ namespace FileRelatedParts
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            //example1
+            //object myObj = "Zoli";
+            //if (myObj is string) MessageBox.Show((string)myObj);
+
+            //example2
+            Control myControl = button1;
+            if (myControl is Button)
             {
-                int myInt = Convert.ToInt32(textBox1.Text); //from string to int
-                MessageBox.Show(myInt.ToString()); //from int to string
-
-                bool mybool = Convert.ToBoolean("true");
-                MessageBox.Show(mybool.ToString());
-
-                MessageBox.Show(Convert.ToInt32(3.678).ToString());
-
-                //Es igy tovabb szinte mindenbol minedent a jozan esz hatarain belul.
+                //Button myButton = (Button)myControl;
+                //A castolas alternativaja az "as" operator
+                Button myButton = myControl as Button;
+                MessageBox.Show(myButton.Text);
             }
-            catch
-            {
-                MessageBox.Show("Conversion failed.");
-            }
+
+
+            //example
+            //example
+            //example
+
+
         }
     }
 }
