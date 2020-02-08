@@ -46,27 +46,20 @@ namespace AllKindsOfStuff
             t2 = new Thread(Write);
             t2.Start();
             //Itt varunk, hogy vegezzen a Write() fgv.
-            while(t2.IsAlive);
+            //while(t2.IsAlive);
+            t2.Join();
             textBox1.Text = stringForTheTextBox1;
         }
 
         string stringForTheTextBox1 = string.Empty;        
         void Write()
         {
-            for (int i = 0; i < 1000; i++)            
+            for (int i = 0; i < 2000; i++)            
                 //System.InvalidOperationException: 'Cross-thread operation not valid: Control 'textBox1'
                 //accessed from a thread other than the thread it was created on.'
                 //textBox1.Text += "Zoli" + i.ToString() + Environment.NewLine;
                 //Nem ferhetunk az uj threadbol a textbox1-hez, ezert tesszuk egy valtozoba.
                 stringForTheTextBox1 += "Zoli" + i.ToString() + Environment.NewLine;            
-        }
-
-        string stringForTheTextBox2 = string.Empty;
-        void WriteWithParams(object myParamArray)
-        {//Csak egyetlen object parametert fogadhat, ezert castolni kell az objectet object tombbe
-            object[] o = (object[])myParamArray;
-            for (int i = 0; i < Convert.ToInt32(o[1]); i++)
-                stringForTheTextBox2 += o[0] + i.ToString() + Environment.NewLine;            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -75,8 +68,17 @@ namespace AllKindsOfStuff
             //object[] objArray = { "Sugika", 500 };
             t3.Start(new object[] { "Sugika", 500 });
             //Itt varunk, hogy vegezzen a WriteWithParams() fgv.
-            while (t3.IsAlive) ;
+            //while (t3.IsAlive);
+            t3.Join();
             textBox2.Text = stringForTheTextBox2;
+        }
+
+        string stringForTheTextBox2 = string.Empty;
+        void WriteWithParams(object myParamArray)
+        {//Csak egyetlen object parametert fogadhat, ezert castolni kell az objectet object tombbe
+            object[] o = (object[])myParamArray;
+            for (int i = 0; i < Convert.ToInt32(o[1]); i++)
+                stringForTheTextBox2 += o[0] + i.ToString() + Environment.NewLine;            
         }
     }
 }
