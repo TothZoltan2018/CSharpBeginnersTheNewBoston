@@ -11,7 +11,7 @@ using System.IO;
 
 namespace FileRelatedParts
 {
-    //Part56 FolderBrowsingDialog, Part57 Directory class1, Part58 Directory class2, Part59 Directory class3
+    //Part60 File Class1, Part61 File Class2, Part62 Path Class
     public partial class Form1 : Form
     {
         public Form1()
@@ -20,37 +20,22 @@ namespace FileRelatedParts
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            //Part56, 57
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "A zoxigen kihasznalasara a vizbul veszi ki a zoxigent, teccikerteni?";
-            fbd.RootFolder = Environment.SpecialFolder.UserProfile;
-            if (fbd.ShowDialog() == DialogResult.OK)
+        {            
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                //textBox1.Text = fbd.SelectedPath;
-                string[] files = Directory.GetFiles(fbd.SelectedPath);//Directory.GetDirectories, Directory.GetLogicalDrives
-                foreach (var file in files)
-                {
-                    textBox1.Text += file + "\n";
-                    label1.Text += file + "\n";
-                }
+                //Part60
+                //MessageBox.Show(File.Exists(ofd.FileName).ToString());
+                //File.Delete(.....);
 
-                //Part58
-                maskedTextBox1.Text = Directory.GetCreationTime(fbd.SelectedPath).ToString(); //sok egyeb idoinfo is van meg.
-                MessageBox.Show(Directory.GetParent(fbd.SelectedPath).ToString());
+                //Part61
+                //File.Copy(sourceFileName, targetFileName, overwrite);
+                //File.Move(sourceFileName, targetFileName);
 
-                //Part59
-                Directory.CreateDirectory(fbd.SelectedPath + "\\ZoliTest\\Source");
-                //Directory.Exists(fbd.SelectedPath + "\\ZoliTest\\Destination");
-                try
-                {
-                    Directory.Move(fbd.SelectedPath + "\\ZoliTest\\Source", fbd.SelectedPath + "\\ZoliTest\\Destination");
-                }
-                catch (Exception eDir)
-                {
-                    MessageBox.Show(eDir.Message.ToString());
-                }
-                //Directory.Delete() - ures vagy mindent, rekurzivan
+                //Part62
+                MessageBox.Show(Path.GetDirectoryName(ofd.FileName) + "\n" +
+                                Path.GetExtension(ofd.FileName) + "\n" +
+                                Path.GetFileName(ofd.FileName));
             }
         }
     }
