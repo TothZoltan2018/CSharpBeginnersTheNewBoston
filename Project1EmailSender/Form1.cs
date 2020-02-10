@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net; //
 using System.Net.Mail; //
+using Project1EmailSender.Resources;
 
 namespace Project1EmailSender
 {
@@ -25,11 +26,9 @@ namespace Project1EmailSender
             try
             {
                 button1.Enabled = false;
-                if (!textBox4.Text.Contains("@gmail.com"))
-                {
-                    MessageBox.Show("gmail-es cimet adj meg a \"Credentials\" alatt!");
-                    return;
-                }                
+
+                if (!IsFormStatusReadyToSend()) return; 
+
                 MailMessage message = new MailMessage();
                 message.From = new MailAddress(textBox4.Text);
                 message.Subject = textBox2.Text;
@@ -46,19 +45,74 @@ namespace Project1EmailSender
                 smtpClient.Port = 587; //a gmail portja
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(message);
+                MessageBox.Show("Mail has been sent.");
             }
             catch (Exception eSentEmail)
             {
-                MessageBox.Show("Hibas levelkuldesi kiserlet:" +
+                MessageBox.Show("Sending mail has failed:" +
                                 Environment.NewLine + eSentEmail.Message,
                                 "Error",
                                 MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
+                                MessageBoxIcon.Error);}
             finally
             {
                 button1.Enabled = true;
             }
+        }
+
+        private bool IsFormStatusReadyToSend()
+        {
+            if (!CheckFieldsAndShowMessageBox(textBox1 => textBox1.Text == string.Empty,
+                        textBox1, GlobalStrings.troubleMessageTextBox1, GlobalStrings.mesBoxErr,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error)) return false;
+
+            if (!CheckFieldsAndShowMessageBox(textBox2 => textBox2.Text == string.Empty,
+                        textBox2, GlobalStrings.troubleMessageTextBox2, GlobalStrings.mesBoxInf,
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information)) return false;
+            if (!CheckFieldsAndShowMessageBox(textBox3 => textBox3.Text == string.Empty,
+                        textBox3, GlobalStrings.troubleMessageTextBox3, GlobalStrings.mesBoxInf,
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information)) return false;
+
+            if (!CheckFieldsAndShowMessageBox(textBox1 => !textBox4.Text.Contains(GlobalStrings.gmailPostFix),
+                        textBox4, GlobalStrings.troubleMessageTextBox4, GlobalStrings.mesBoxErr,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error)) return false;
+
+             if (!CheckFieldsAndShowMessageBox(textBox5 => textBox5.Text == string.Empty,
+                        textBox5, GlobalStrings.troubleMessageTextBox5, GlobalStrings.mesBoxErr,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error)) return false;
+
+            return true;
+        }
+
+        private bool CheckFieldsAndShowMessageBox(Func<TextBox, bool> check, TextBox textbox, string troublemessageTextbox, string msgBoxCaption, MessageBoxButtons msgStatus, MessageBoxIcon icon)
+        {
+            bool fieldsAreOk = true;
+           
+            if (check(textbox))
+            {//Hibas/ki nem toltott field adat eseten jovunk ide
+                fieldsAreOk = false;
+                switch (msgStatus)
+                {
+                    case MessageBoxButtons.OK:
+                        MessageBox.Show(troublemessageTextbox, msgBoxCaption, msgStatus, icon);
+                        break;
+                    case MessageBoxButtons.OKCancel:
+                        if (DialogResult.OK == MessageBox.Show(troublemessageTextbox, msgBoxCaption, msgStatus, icon)) return true;
+                        break;
+                    case MessageBoxButtons.AbortRetryIgnore:
+                        break;
+                    case MessageBoxButtons.YesNoCancel:
+                        break;
+                    case MessageBoxButtons.YesNo:
+                        break;
+                    case MessageBoxButtons.RetryCancel:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return fieldsAreOk;
         }
     }
 }
