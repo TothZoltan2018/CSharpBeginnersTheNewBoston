@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using System.Net;//
+
+
 
 namespace AllKindsOfStuff
 {
-    //Part72 Webclient DownloadString, Part73 Download files
+    //Part77 DateTime struct, Part78 DateTimePicker
     public partial class Form1 : Form
     {        
         public Form1()
@@ -20,35 +20,26 @@ namespace AllKindsOfStuff
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //Part72
-            //WebClient wc = new WebClient();
-            //textBox1.Text = wc.DownloadString("https://pastebin.com/index/cgKiziiQ");   
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            //Part73
-            SaveFileDialog sfd = new SaveFileDialog();
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                WebClient wc = new WebClient();
-                wc.DownloadFileAsync(new Uri("https://drive.google.com/open?id=1hwJ3nR_mFTy2ditwBFEMtL-IDUhaHNYs"), sfd.FileName);
-                wc.DownloadFileCompleted += Wc_DownloadFileCompleted;//ugyanez: new AsyncCompletedEventHandler(Wc_DownloadFileCompleted);
-                wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
-            }
+            //Part77
+            DateTime dt1 = new DateTime(1997, 8, 27, 18, 44, 55);            
+            DateTime dt2 = DateTime.Today;
+            DateTime dt3 = DateTime.Now;
+            string dt4 = DateTime.IsLeapYear(1977).ToString();
+            string dt5 = DateTime.IsLeapYear(Convert.ToInt32(DateTime.Today.Year)).ToString();
+            string dt6 = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month).ToString();
+            string dt7 = DateTime.Now.ToFileTime().ToString("x");
+            string dt8 = DateTime.FromFileTime(DateTime.Now.ToFileTime()).ToString();
+
+            MessageBox.Show(dt1.ToString() + "\n" + dt2.ToString() + "\n" + dt3.ToString() + "\n" + dt4 + "\n" + dt5 + "\n" + dt6 + "\n" + dt7 + "\n" + dt8);
         }
 
-        private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        //Part78
+        private void button2_Click(object sender, EventArgs e)
         {
-            label1.Text = "Progress: " + e.ProgressPercentage.ToString();
-            progressBar1.Value = e.ProgressPercentage;
-        }
-
-        private void Wc_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            MessageBox.Show("File is downloaded.");
+            DateTime dt = dateTimePicker1.Value;
+            MessageBox.Show(dt.ToString());
         }
     }
 }

@@ -154,7 +154,7 @@
             this.groupBox1.Size = new System.Drawing.Size(274, 93);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Credentials";
+            this.groupBox1.Text = "Credentials of Your Gmail account";
             // 
             // Form1
             // 
