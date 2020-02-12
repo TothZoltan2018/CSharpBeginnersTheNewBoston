@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace AllKindsOfStuff
 {
-    //Part77 DateTime struct, Part78 DateTimePicker
+    //Part79 PictureBox
     public partial class Form1 : Form
     {        
         public Form1()
@@ -22,24 +22,19 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Part77
-            DateTime dt1 = new DateTime(1997, 8, 27, 18, 44, 55);            
-            DateTime dt2 = DateTime.Today;
-            DateTime dt3 = DateTime.Now;
-            string dt4 = DateTime.IsLeapYear(1977).ToString();
-            string dt5 = DateTime.IsLeapYear(Convert.ToInt32(DateTime.Today.Year)).ToString();
-            string dt6 = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month).ToString();
-            string dt7 = DateTime.Now.ToFileTime().ToString("x");
-            string dt8 = DateTime.FromFileTime(DateTime.Now.ToFileTime()).ToString();
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                //1.
+                //pictureBox1.ImageLocation = ofd.FileName;
 
-            MessageBox.Show(dt1.ToString() + "\n" + dt2.ToString() + "\n" + dt3.ToString() + "\n" + dt4 + "\n" + dt5 + "\n" + dt6 + "\n" + dt7 + "\n" + dt8);
-        }
+                //2.
+                Image image = Image.FromFile(ofd.FileName);
+                pictureBox1.Image = image;
 
-        //Part78
-        private void button2_Click(object sender, EventArgs e)
-        {
-            DateTime dt = dateTimePicker1.Value;
-            MessageBox.Show(dt.ToString());
+                //3.
+                //pictureBox1.ImageLocation = "https://www.google.hu/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
+            }
         }
     }
 }
