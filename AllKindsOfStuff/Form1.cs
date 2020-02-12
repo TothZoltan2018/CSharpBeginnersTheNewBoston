@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace AllKindsOfStuff
 {
-    //Part79 PictureBox
+    //Part80 ClipBoard class
     public partial class Form1 : Form
     {        
         public Form1()
@@ -20,21 +20,28 @@ namespace AllKindsOfStuff
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            pictureBox1.ImageLocation = @"C:\Autóvásárlás\Vértes Hyundai drágább\HYUNDAI I30 CW 1.4i Life_files\13817980_1.jpg";
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                //1.
-                //pictureBox1.ImageLocation = ofd.FileName;
+            //1. Jeloljunk ki barhol egy szoveget, majd ctrl+c, utana katt a gombra...
+            textBox2.Text = Clipboard.GetText();
 
-                //2.
-                Image image = Image.FromFile(ofd.FileName);
-                pictureBox1.Image = image;
+            //2.
+            //Clipboard.GetData(DataFormats.Rtf);
 
-                //3.
-                //pictureBox1.ImageLocation = "https://www.google.hu/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png";
-            }
+            //3.
+            Clipboard.SetText("Zoli");
+
+            //4.
+            Clipboard.SetImage(pictureBox1.Image);
+            pictureBox2.Image = Clipboard.GetImage();
+
+            Clipboard.Clear();
         }
+
     }
 }
