@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace AllKindsOfStuff
 {
-    //Part80 ClipBoard class
+    //Part81 ColorDialog, 82ColorStruct
     public partial class Form1 : Form
     {        
         public Form1()
@@ -20,28 +20,39 @@ namespace AllKindsOfStuff
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            pictureBox1.ImageLocation = @"C:\Autóvásárlás\Vértes Hyundai drágább\HYUNDAI I30 CW 1.4i Life_files\13817980_1.jpg";
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            //1. Jeloljunk ki barhol egy szoveget, majd ctrl+c, utana katt a gombra...
-            textBox2.Text = Clipboard.GetText();
+            //Part81 ColorDialog
+            ColorDialog cd = new ColorDialog();
+            cd.FullOpen = true; //A megnyilo szinvalaszto ablakban rogton lathato a custom szinvalasztas.
+            //cd.AllowFullOpen = false;//A megnyilo szinvalaszto ablakban valaszthatunk -e custom szint.
+            cd.HelpRequest += Cd_HelpRequest;
+            cd.ShowHelp = true;
+            if (cd.ShowDialog() == DialogResult.OK)
+            {
+                button1.BackColor = cd.Color;
 
-            //2.
-            //Clipboard.GetData(DataFormats.Rtf);
+                //82ColorStruct
+                Color c = cd.Color;
+                if (c.IsNamedColor) MessageBox.Show(c.Name);
+                if (c.IsKnownColor) MessageBox.Show(c.ToKnownColor().ToString()); //Ezeket foleg a Windows hasznalja, pl. scrollbar
 
-            //3.
-            Clipboard.SetText("Zoli");
+                c = Color.MintCream;
+                MessageBox.Show(c.Name);
+                c = Color.FromKnownColor(KnownColor.GradientActiveCaption);
+                MessageBox.Show(c.ToKnownColor().ToString()); //Igy is jo volt: MessageBox.Show(c.Name);
+                MessageBox.Show(c.ToArgb().ToString("x"));
 
-            //4.
-            Clipboard.SetImage(pictureBox1.Image);
-            pictureBox2.Image = Clipboard.GetImage();
-
-            Clipboard.Clear();
+                int i = c.ToArgb();
+                Color col = Color.FromArgb(i);
+                button1.BackColor = col; // = c
+                
+            }
         }
 
+        private void Cd_HelpRequest(object sender, EventArgs e)
+        {
+            MessageBox.Show("Choose the backgroundcolor of your button.");
+        }
     }
 }
