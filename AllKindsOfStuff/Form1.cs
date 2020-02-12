@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AllKindsOfStuff
 {
-    //Part83 FontDialog
+    //Part84 Timer Control
     public partial class Form1 : Form
     {        
         public Form1()
@@ -20,21 +20,19 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FontDialog fd = new FontDialog();
-            fd.MinSize = 10;
-            fd.ShowColor = true; //Csak megmutatja, de kivalasztani
-            fd.ShowHelp = true;
-            fd.HelpRequest += Fd_HelpRequest;
-            if (fd.ShowDialog() == DialogResult.OK)
-            {
-                textBox1.Font = fd.Font;
-                textBox1.ForeColor = fd.Color;//a betu szinet itt lehet
-            }            
+            timer1.Start();
         }
 
-        private void Fd_HelpRequest(object sender, EventArgs e)
+        int i = 11;
+
+        //A Formon s timer1-en besllitottuk s tick idot, ami 1000ms
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("Chose a font style for the textbox.");
+            //timer1.Stop();
+            //MessageBox.Show("1 sec elapsed.");
+            i--;
+            textBox1.Text = i.ToString();
+            if (i == 0) timer1.Stop();
         }
     }
 }
