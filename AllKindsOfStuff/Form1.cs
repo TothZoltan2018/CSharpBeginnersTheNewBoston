@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part84 Timer Control
+    //Part85 Playing Sounds
     public partial class Form1 : Form
     {        
         public Form1()
@@ -20,19 +21,15 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            timer1.Start();
-        }
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //if (ofd.ShowDialog() == DialogResult.OK)
+            //{
+            //    SoundPlayer s = new SoundPlayer(ofd.FileName);
+            //    s.Play();
+            //    //s.PlayLooping();                
+            //}
 
-        int i = 11;
-
-        //A Formon s timer1-en besllitottuk s tick idot, ami 1000ms
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //timer1.Stop();
-            //MessageBox.Show("1 sec elapsed.");
-            i--;
-            textBox1.Text = i.ToString();
-            if (i == 0) timer1.Stop();
+            SystemSounds.Asterisk.Play();
         }
     }
 }
