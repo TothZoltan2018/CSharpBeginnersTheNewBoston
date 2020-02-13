@@ -11,7 +11,7 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part88 Multi Document Interface
+    //Part89 ComboBox Control
     public partial class Form1 : Form
     {        
         public Form1()
@@ -21,26 +21,15 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IsMdiContainer = true;//lehetnek a Form1-ben formok
-            Form2 f2 = new Form2();
-            f2.MdiParent = this;
-            //f.ShowDialog(); //Ez kivetelt dob
-            f2.Show();
-
-            Form3 f3 = new Form3();
-            f3.MdiParent = this;            
-            f3.Show();
-
-            Form4 f4 = new Form4();
-            f4.MdiParent = this;
-            f4.Show();
+            //ComboBox - readonly, ha a property-knel beallitjuk: DropDownList
+            //if (comboBox1.Text == "Zolika") MessageBox.Show("Teszt");
+            comboBox1.Items[0] = "Zolika baba";
+            comboBox1.Items.Add("Arankamama");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.LayoutMdi(MdiLayout.ArrangeIcons); //minimalizalt allapotban a Form1 aljara rendezi a Formokat
-            //this.LayoutMdi(MdiLayout.Cascade);
-            this.LayoutMdi(MdiLayout.TileHorizontal);
+            MessageBox.Show("Egy elem ki lett valasztva.");
         }
     }
 }
