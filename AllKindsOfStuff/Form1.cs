@@ -11,13 +11,23 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part95 Toolstrip, MenuStrip, StatusStrip Controls
+    //Part96 NotifyControl
     public partial class Form1 : Form
     {        
         public Form1()
         {
             InitializeComponent();
         }
-        //Ez csak UI: A Form Designeren van minden, kod nincs mogotte 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide(); //Elrejti a futo programunkat.
+            notifyIcon1.ShowBalloonTip(1000, "Alive", "My first BallonTip: The app is still running.", ToolTipIcon.Info);
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+        }
     }
 }
