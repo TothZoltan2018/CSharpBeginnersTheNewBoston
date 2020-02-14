@@ -11,23 +11,27 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part96 NotifyControl
+    //Part98 Save Project Settings.
     public partial class Form1 : Form
     {        
         public Form1()
         {
             InitializeComponent();
+            //A menuben felvenni az elmentendo valtozokat: Project-->AllKindsOfStuff Properties --> Settings
+            //Visszaolvasas
+            textBox1.Text = AllKindsOfStuff.Properties.Settings.Default.nameTobePreserved;
+            textBox2.Text = AllKindsOfStuff.Properties.Settings.Default.ageTobePreserved.ToString();
+            button1 = AllKindsOfStuff.Properties.Settings.Default.myButton;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide(); //Elrejti a futo programunkat.
-            notifyIcon1.ShowBalloonTip(1000, "Alive", "My first BallonTip: The app is still running.", ToolTipIcon.Info);
-        }
+            //Kimentes
+            AllKindsOfStuff.Properties.Settings.Default.nameTobePreserved = textBox1.Text;
+            AllKindsOfStuff.Properties.Settings.Default.ageTobePreserved = Convert.ToInt32(textBox2.Text);
+            AllKindsOfStuff.Properties.Settings.Default.myButton = button1;
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
+            AllKindsOfStuff.Properties.Settings.Default.Save();
         }
     }
 }
