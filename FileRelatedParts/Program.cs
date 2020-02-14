@@ -12,11 +12,15 @@ namespace FileRelatedParts
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] files)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            foreach (string file in files)
+            {
+                Application.Run(new Form1(file));
+            }            
         }
     }
 }
