@@ -11,7 +11,7 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //
+    //Part102 Property Grid
     public partial class Form1 : Form
     {
         public Form1()
@@ -19,90 +19,37 @@ namespace AllKindsOfStuff
             InitializeComponent();
         }
 
+        Person p = new Person();
+
         private void button1_Click(object sender, EventArgs e)
         {
-            treeView1.Nodes.Add("People"); //ez a fa egyik gyokere --> treeView1.Nodes[0]
-            treeView1.Nodes.Add("Animals"); //ez a fa masik gyokere --> treeView1.Nodes[1]
-            treeView1.Nodes[0].Nodes.Add("Zolika");
-            treeView1.Nodes[0].Nodes.Add("Sugika");
-            treeView1.Nodes[0].Nodes.Add("Rege");
-            treeView1.Nodes[1].Nodes.Add("Dog");
-            treeView1.Nodes[1].Nodes.Add("Cat");
-            treeView1.Nodes[1].Nodes[0].Nodes.Add("Foxhund");
-            treeView1.Nodes[1].Nodes[0].Nodes.Add("Wolf-Dog");
+            p.Name = "Zoltan";
+            p.Age = 11;
+            p.Email = "valami@gmail.com";
+            //Ez szepen megjeleniti a p osztaly property-eit. (pl. A filed-eket nem.) Ugyanarra az objektumra mutatnak.
+            propertyGrid1.SelectedObject = p;
+            //A propertyGrid1.SelectedObject-nek a formon is adhatunk erteket.Igy pl a button1-nek tudjuk futas kozben
+            //valtoztatni a tulajdonsagait
+            Reload();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Reload()
         {
-            treeView1.SelectedNode.Remove();
+            textBox1.Text = p.Name;
+            textBox2.Text = p.Age.ToString();
+            textBox3.Text = p.Email;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            treeView1.Nodes.Clear();
+            Reload();
         }
-                
-        void RemoveCheckedNodes(TreeNodeCollection tnc)
-        {
-            List<TreeNode> tnListToBeRemoved = new List<TreeNode>();
-            foreach (TreeNode node in tnc)
-                if (node.Checked) tnListToBeRemoved.Add(node);
-                else if (node.Nodes.Count != 0) RemoveCheckedNodes(node.Nodes); //vannak alatta Node-ok, azokra rekurzio
-            foreach (TreeNode node in tnListToBeRemoved)
-            {
-                node.Remove();
-                //treeView1.Nodes.Remove(node); //ugyanaz, mint fentebb
-            }
-         }
+    }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            RemoveCheckedNodes(treeView1.Nodes);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //MyRemoveCheckedNodes(treeView1.Nodes); //Ez kivetelt dob!
-        }
-
-        private void MyRemoveCheckedNodes(TreeNodeCollection tnc)
-        {
-            foreach (TreeNode node in tnc)
-            {
-                if (node.Checked) node.Remove(); //Ez kivetelt dob!
-                else if (node.Nodes.Count != 0) MyRemoveCheckedNodes(node.Nodes);                
-            } 
-        }
-
-        //Part101
-        //1. Rahuzok egz ImageList-et a form-ra
-        private void button6_Click(object sender, EventArgs e)
-        {
-            //2.
-            TreeNode tnPers = new TreeNode();
-            tnPers.Text = "Pers.";
-            tnPers.SelectedImageIndex = tnPers.ImageIndex = 1;            
-            treeView1.Nodes.Add(tnPers);
-            //3. A UI-on A treeView1 propertyknel meg kell adni az imageList-unket/
-            TreeNode tnSugika = new TreeNode();
-            tnSugika.Text = "Sugika";
-            tnSugika.SelectedImageIndex = tnSugika.ImageIndex = 2;
-            treeView1.Nodes[0].Nodes.Add(tnSugika);
-            TreeNode tnZolika = new TreeNode();
-            tnZolika.Text = "Sugika";
-            tnZolika.SelectedImageIndex = tnZolika.ImageIndex = 3;
-            treeView1.Nodes[0].Nodes.Add(tnZolika);
-
-            //TreeNode tnAnimals = new TreeNode();
-            //tnAnimals.Text = "Animals";
-            //treeView1.Nodes.Add(tnAnimals);
-            treeView1.Nodes.Add("Animals");
-            treeView1.Nodes[1].Nodes.Add("Dogs");          
-            TreeNode tnWolfDog = new TreeNode();
-            tnWolfDog.Text = "Wolf-Dog";
-            tnWolfDog.ImageIndex = 4;
-            tnWolfDog.SelectedImageIndex = 4;
-            treeView1.Nodes[1].Nodes[0].Nodes.Add(tnWolfDog);
-        }
+    class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Email { get; set; }
     }
 }
