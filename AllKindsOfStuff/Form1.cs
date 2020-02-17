@@ -11,7 +11,7 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part102 Property Grid
+    //Part103, 104 - Accessing All Controls
     public partial class Form1 : Form
     {
         public Form1()
@@ -19,37 +19,45 @@ namespace AllKindsOfStuff
             InitializeComponent();
         }
 
-        Person p = new Person();
-
         private void button1_Click(object sender, EventArgs e)
         {
-            p.Name = "Zoltan";
-            p.Age = 11;
-            p.Email = "valami@gmail.com";
-            //Ez szepen megjeleniti a p osztaly property-eit. (pl. A filed-eket nem.) Ugyanarra az objektumra mutatnak.
-            propertyGrid1.SelectedObject = p;
-            //A propertyGrid1.SelectedObject-nek a formon is adhatunk erteket.Igy pl a button1-nek tudjuk futas kozben
-            //valtoztatni a tulajdonsagait
-            Reload();
+            //Igy a groupControl-on belul nem nevezi at a gombot.
+            //foreach (Control control in Controls)
+            //{
+            //    control.Text = "Zoli";
+            //}
+
+            //Ez a groupControl-on belul atnevezi a gombot
+            AccessAll(Controls);
         }
 
-        private void Reload()
+        //Part103
+        void AccessAll(Control.ControlCollection cc)
         {
-            textBox1.Text = p.Name;
-            textBox2.Text = p.Age.ToString();
-            textBox3.Text = p.Email;
+            foreach (Control control in cc)
+            {
+                control.Text = "Zoli";
+                if (control.HasChildren) AccessAll(control.Controls);
+
+                //104
+                if (control is CheckBox)
+                {
+                    CheckBox checkBox = control as CheckBox;                 
+                    checkBox.Checked = true;
+                }
+
+                if (control is Button)
+                {
+                    //control.Enabled = false;
+                    Button butt = control as Button;
+                    butt.Click += Butt_Click;
+                }
+            }
         }
 
-        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void Butt_Click(object sender, EventArgs e)
         {
-            Reload();
+            MessageBox.Show("You have clicked some Button.");
         }
-    }
-
-    class Person
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string Email { get; set; }
     }
 }
