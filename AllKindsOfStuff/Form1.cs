@@ -37,7 +37,8 @@ namespace AllKindsOfStuff
             foreach (Control control in cc)
             {
                 control.Text = "Zoli";
-                if (control.HasChildren) AccessAll(control.Controls);
+
+                if (control.HasChildren) AccessAll(control.Controls); //Rekurzioval bejarja a belso kontrollokat (itt groupBox1)
 
                 //104
                 if (control is CheckBox)
