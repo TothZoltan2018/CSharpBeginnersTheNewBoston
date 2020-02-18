@@ -11,7 +11,7 @@ using System.Media;
 
 namespace AllKindsOfStuff
 {
-    //Part108 - TrackBar and NumericUpDown Controls
+    
     public partial class Form1 : Form
     {
         public Form1()
@@ -21,7 +21,7 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(trackBar1.Value.ToString());
+            
         }
     }
 }
