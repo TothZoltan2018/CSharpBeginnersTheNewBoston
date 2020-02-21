@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Drawing
 {
-    //Part 124, 125 - LinearGradientBrush
+    //Part 125, 126 - PathGradientBrush
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,30 +22,21 @@ namespace Drawing
 
         private void panel1_Click(object sender, EventArgs e)
         {
-            LinearGradientBrush lgb = new LinearGradientBrush(new Point(60, 60), new Point(120, 120), Color.Red, Color.Blue);
-            Graphics g = panel1.CreateGraphics();            
-            for (int i = 0; i < 180; i += 1)
-            {
-                //Thread.Sleep(10);
-                g.RotateTransform(i);
-                g.FillRectangle(lgb, 60, 60, 120, 120);
-                g.FillEllipse(lgb, 20, 20, 50, 50);                
-            }
-            //125
-            g = panel1.CreateGraphics(); //Ha ez nincs, akkor nem rajzol ujabbakat.
+            Graphics g = panel1.CreateGraphics();
 
-            ColorBlend cb = new ColorBlend
-            {
-                Colors = new Color[] { Color.Black, Color.Blue, Color.Orange, Color.Wheat },
-                Positions = new float[] { 0, 0.5F, 0.75F, 1F } //0...1
-            };
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddEllipse(30, 30, 360, 360);
+            Rectangle r = new Rectangle(400, 30, 360, 360);
+            gp.AddRectangle(r);
+            Point[] points = { new Point(30, 600), new Point(70, 440), new Point(120, 700), new Point(400, 550), new Point(300, 450) };
+            gp.AddPolygon(points);
+            PathGradientBrush pgb = new PathGradientBrush(gp);
+            pgb.CenterColor = Color.White;
+            pgb.SurroundColors = new Color[] { Color.Black };
 
-            lgb = new LinearGradientBrush(new Point(120, 120), new Point(120, 470), Color.Black, Color.Red)
-            {
-                InterpolationColors = cb
-            };
-
-            g.FillEllipse(lgb, 120, 120, 350, 350);
+            g.FillEllipse(pgb, 30, 30, 360, 360);
+            g.FillRectangle(pgb, r);
+            g.FillPolygon(pgb, points);
         }
     }
 }
