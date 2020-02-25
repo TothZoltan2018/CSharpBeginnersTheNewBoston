@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project1EmailSender", "Proj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Drawing\Drawing.csproj", "{C72A9DAC-7F0B-412D-9858-6C7B5F840A1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPaint", "ProjectPaint\ProjectPaint.csproj", "{8D209317-3DE7-446A-8AEB-5C41525B8007}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C72A9DAC-7F0B-412D-9858-6C7B5F840A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72A9DAC-7F0B-412D-9858-6C7B5F840A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C72A9DAC-7F0B-412D-9858-6C7B5F840A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
