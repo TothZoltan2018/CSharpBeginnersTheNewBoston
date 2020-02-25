@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ProjectPaint
 {
-    //Part 128, 129, 130, 131 - Project 2 Paint Program
+    //Part 128, 129, 130, 131, 132 - Project 2 Paint Program
     public partial class Form1 : Form
     {
         public Form1()
@@ -136,6 +136,21 @@ namespace ProjectPaint
         private void circleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             shape = Shapes.Circle;
+        }
+
+        private void panel1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
+
+        private void panel1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] imagePath = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string path in imagePath)
+            {
+                g.DrawImage(Image.FromFile(path), new Point(0, 0));
+            }
+
         }
     }
 }
