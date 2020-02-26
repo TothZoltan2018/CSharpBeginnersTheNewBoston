@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProjectPaint
+namespace MakingOfControls
 {
     //Part133, 134, 135, 136, 137, 138 - Making Controls
     public partial class MyButton : UserControl

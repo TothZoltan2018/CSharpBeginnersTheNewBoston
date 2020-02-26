@@ -1,4 +1,4 @@
-﻿namespace ProjectPaint
+﻿namespace MakingOfControls
 {
     partial class MyButton
     {

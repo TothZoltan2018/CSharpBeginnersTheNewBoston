@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.myButton1 = new ProjectPaint.MyButton();
+            this.myButton1 = new MakingOfControls.MyButton();
             this.SuspendLayout();
             // 
             // myButton1
@@ -56,7 +56,7 @@
 
         #endregion
 
-        private ProjectPaint.MyButton myButton1;
+        private MakingOfControls.MyButton myButton1;
     }
 }
 
