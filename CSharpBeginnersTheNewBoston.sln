@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Drawing\Drawing.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPaint", "ProjectPaint\ProjectPaint.csproj", "{8D209317-3DE7-446A-8AEB-5C41525B8007}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakingOfControls", "MakingOfControls\MakingOfControls.csproj", "{E287D5B9-C572-4A64-B7C7-C235F54885F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D209317-3DE7-446A-8AEB-5C41525B8007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E287D5B9-C572-4A64-B7C7-C235F54885F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E287D5B9-C572-4A64-B7C7-C235F54885F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E287D5B9-C572-4A64-B7C7-C235F54885F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E287D5B9-C572-4A64-B7C7-C235F54885F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
