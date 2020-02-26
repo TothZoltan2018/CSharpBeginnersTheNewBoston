@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "MyButton";
             this.Size = new System.Drawing.Size(408, 228);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyButton_MouseDown);
             this.MouseEnter += new System.EventHandler(this.MyButton_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.MyButton_MouseLeave);
             this.MouseHover += new System.EventHandler(this.MyButton_MouseHover);

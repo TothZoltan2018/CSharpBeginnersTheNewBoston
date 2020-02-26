@@ -34,8 +34,9 @@
             // myButton1
             // 
             this.myButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.myButton1.Location = new System.Drawing.Point(95, 79);
-            this.myButton1.MyButtText = "Part137";
+            this.myButton1.ButtonColor = System.Drawing.SystemColors.Control;
+            this.myButton1.Location = new System.Drawing.Point(106, 84);
+            this.myButton1.MyButtText = "Part138";
             this.myButton1.Name = "myButton1";
             this.myButton1.Size = new System.Drawing.Size(286, 161);
             this.myButton1.TabIndex = 0;
