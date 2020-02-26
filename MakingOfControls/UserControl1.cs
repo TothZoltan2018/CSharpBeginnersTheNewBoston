@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ProjectPaint
 {
-    //Part133, 134 - Making Controls
+    //Part133, 134, 135 - Making Controls
     public partial class MyButton : UserControl
     {
         public MyButton()
@@ -27,6 +27,10 @@ namespace ProjectPaint
             //Most, ha buildelem a projektet, akkor a Toolbox-ban megjelenik a Mybutton is.
 
             label1.Location = new Point(this.Width / 2 - label1.Width / 2, this.Height / 2 - label1.Height / 2);
+
+            //Az eredeti Windows-os gombokhoz hasonloan a gomb also felere tegyunk egy sotet teglalapot
+            sb.Color = Color.FromKnownColor(KnownColor.ControlLight);
+            g.FillRectangle(sb, 0, this.Height / 2, this.Width, this.Height / 2);
         }
 
         //A MyButton-nak ezzel keszitunk egy, a form1-rol is elerheto property-t. (Build utan.)
