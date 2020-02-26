@@ -35,9 +35,9 @@
             // 
             this.myButton1.BackColor = System.Drawing.SystemColors.Control;
             this.myButton1.Location = new System.Drawing.Point(95, 79);
-            this.myButton1.MyButtText = "labelllllllo";
+            this.myButton1.MyButtText = "Part136";
             this.myButton1.Name = "myButton1";
-            this.myButton1.Size = new System.Drawing.Size(75, 30);
+            this.myButton1.Size = new System.Drawing.Size(66, 27);
             this.myButton1.TabIndex = 0;
             // 
             // Form1
