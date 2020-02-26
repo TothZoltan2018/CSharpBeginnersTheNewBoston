@@ -11,26 +11,17 @@ using System.Security.Cryptography;//
 
 namespace AllKindsOfStuff
 {
-    //118 - Drag and Drop
+    //Part140 - Splash Screen
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();            
         }
 
-        private void panel1_DragOver(object sender, DragEventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            e.Effect = DragDropEffects.All;
-        }
-
-        private void panel1_DragDrop(object sender, DragEventArgs e)
-        {
-            //A behuzott fajlok neve:
-            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            foreach (string file in files)
-                    MessageBox.Show(file);            
+            Application.Exit(); //Mindenkit kinyir. Nelkule a hatterben a SplashScreen futna tovabb.
         }
     }
 }
