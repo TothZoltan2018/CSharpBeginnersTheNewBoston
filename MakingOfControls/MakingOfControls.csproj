@@ -88,5 +88,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectPaint\ProjectPaint.csproj">
+      <Project>{8d209317-3de7-446a-8aeb-5c41525b8007}</Project>
+      <Name>ProjectPaint</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
