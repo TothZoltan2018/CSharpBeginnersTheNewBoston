@@ -10,8 +10,18 @@ namespace Part141Making_a_DLL
     {
         public class Client
         {
-            public string Name { get; set; }
+            internal string Name { get; set; }
             public int Age { get; set; }
+            public string Email { get; set; }
+        }
+    }
+
+    class MyClass
+    {
+        void MyMethod()
+        {
+            //Az internal Client class masik napespace-ben van, de ugyanabban a projektben
+            Clients.Client c = new Clients.Client(); 
         }
     }
 }
