@@ -8,9 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace AllKindsOfStuff
-{    //Part144 - Goto Keyword and Regions
+{    //Part145 - Capturing Screen
     public partial class Form1 : Form
     {
         public Form1()
@@ -20,27 +21,19 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            #region endless loop with gotos
-            goto MyCode;
-        LabelBeforeSwitch:
+            Thread t = new Thread(Screenshot);
+            t.Start();
+        }
+
+        void Screenshot()
+        {
+            for (; ; ) //endless loop
             {
-                string Zoli = "bbbbbbb";
-                switch (Zoli)
-                {
-                    case "Zoli":
-                        MessageBox.Show("Hello");
-                        break;
-                    default:
-                        MessageBox.Show("The default");
-                        goto case "Zoli";
-                }
+                Bitmap b = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+                Graphics g = Graphics.FromImage(b);
+                g.CopyFromScreen(Point.Empty, Point.Empty, Screen.PrimaryScreen.WorkingArea.Size);
+                pictureBox1.Image = b;
             }
-        MyCode:
-        //{} nem szukseges
-                MessageBox.Show("This is printed at label MyCode");
-                goto LabelBeforeSwitch;
-            
-            #endregion
         }
     }
 }
