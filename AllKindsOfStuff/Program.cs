@@ -16,7 +16,7 @@ namespace AllKindsOfStuff
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SplashScrreen());
+            Application.Run(new Form1());
         }
     }
 }
