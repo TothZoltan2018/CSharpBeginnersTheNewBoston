@@ -11,7 +11,9 @@ using System.Security.Cryptography;
 using System.Threading;
 
 namespace AllKindsOfStuff
-{    //Part145 - Capturing Screen
+{    //Part146 - Making Keyboard Shortcuts
+
+    //Form Property: KeyPreview: True   
     public partial class Form1 : Form
     {
         public Form1()
@@ -19,25 +21,16 @@ namespace AllKindsOfStuff
             InitializeComponent();            
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            Thread t = new Thread(Screenshot);
-            t.Start();
+            if (e.Alt && e.KeyCode.ToString() == "Z")            
+                MessageBox.Show("Key \"ALT\" + \"Z\" is pressed from the Form");            
         }
 
-        void Screenshot()
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            for (; ; ) //endless loop
-            {
-                //Ebben taroljuk majd a screen capture-t
-                Bitmap b = new Bitmap(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
-                //Ez fogja kirajzolni a screen capture-t
-                Graphics g = Graphics.FromImage(b);
-                //Ez csinalja a screen capture-t a Bitmap b-be
-                g.CopyFromScreen(Point.Empty, Point.Empty, Screen.PrimaryScreen.WorkingArea.Size);
-                //Megjelenitjuk a pictureBox-ban
-                pictureBox1.Image = b;
-            }
+            if (e.Shift && e.KeyCode.ToString() == "T")
+                MessageBox.Show("Key \"SHIFT\" + \"T\" is pressed from the TextBox");
         }
     }
 }
