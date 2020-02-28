@@ -11,26 +11,36 @@ using System.Security.Cryptography;
 using System.Threading;
 
 namespace AllKindsOfStuff
-{    //Part146 - Making Keyboard Shortcuts
+{   
+    //Part147 - Checking Controls on Leave
 
     //Form Property: KeyPreview: True   
     public partial class Form1 : Form
     {
         public Form1()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            comboBox1.SelectedIndex = 0;
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        //Ha egy masik kontrol lesz kivalasztva
+        private void textBox1_Leave(object sender, EventArgs e)
         {
-            if (e.Alt && e.KeyCode.ToString() == "Z")            
-                MessageBox.Show("Key \"ALT\" + \"Z\" is pressed from the Form");            
+            if (textBox1.Text == string.Empty)
+            {
+                MessageBox.Show("You must provide a name!");
+                textBox1.Select();
+            }
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void comboBox1_Leave(object sender, EventArgs e)
         {
-            if (e.Shift && e.KeyCode.ToString() == "T")
-                MessageBox.Show("Key \"SHIFT\" + \"T\" is pressed from the TextBox");
+            //Ha a Country van kiválasztva...
+            if (comboBox1.SelectedIndex == 0)
+            {
+                MessageBox.Show("You must Select a Country!");
+                comboBox1.Select();
+            }
         }
     }
 }
