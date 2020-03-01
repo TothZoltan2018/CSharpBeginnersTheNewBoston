@@ -11,11 +11,12 @@ using System.Net; //A veletlen szavak listajanak letoltesehez
 
 namespace HangManGame_Project3
 {
-    //Part154, 155, 156, 157, 158, 159, 160, 161, 162 - Project 3 Hang Man Game
+    //Part154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165 - Project 3 Hang Man Game
     public partial class Form1 : Form
     {
         string word = string.Empty;
         List<Label> labels = new List<Label>();
+        int amountOfMissedLetters = 0;
 
         public Form1()
         {
@@ -30,17 +31,6 @@ namespace HangManGame_Project3
             g.DrawLine(p, new Point(130, 218), new Point(130, 5));
             g.DrawLine(p, new Point(135, 5), new Point(65, 5));
             g.DrawLine(p, new Point(60, 0), new Point(60, 50));
-
-            DrawBodyPart(BodyParts.Head);
-            DrawBodyPart(BodyParts.Left_Eye);
-            DrawBodyPart(BodyParts.Right_Eye);
-            DrawBodyPart(BodyParts.Mouth);
-            DrawBodyPart(BodyParts.Body);
-            DrawBodyPart(BodyParts.Left_Arm);
-            DrawBodyPart(BodyParts.Right_Arm);
-            DrawBodyPart(BodyParts.Left_Leg);
-            DrawBodyPart(BodyParts.Right_Leg);
-
         }
 
         void DrawBodyPart(BodyParts bp)
@@ -87,16 +77,16 @@ namespace HangManGame_Project3
             word = GetRandomWord();
             char[] chars = word.ToCharArray(); //A vegen van meg egy '\n' is.
             int between = groupBox2.Width / chars.Length - 1;
-            for (int i = 0; i < chars.Length - 1; i++)
+            for (int i = 0; i < chars.Length; i++)
             {
-                labels.Add(new Label());
+                labels.Add(new Label());                
                 labels[i].Location = new Point((i * between) + 10, 80);
                 labels[i].Text = "_";
                 labels[i].Parent = groupBox2;
                 labels[i].BringToFront();
                 labels[i].CreateControl();
             }
-            label1.Text = "Word Length: " + (chars.Length - 1).ToString();
+            label1.Text = "Word Length: " + (chars.Length).ToString();
         }
 
         string GetRandomWord()
@@ -123,21 +113,77 @@ namespace HangManGame_Project3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            char letter = textBox1.Text.ToCharArray()[0];
-            if (!char.IsLetter(letter))
+            if (textBox1.Text != string.Empty)
             {
-                MessageBox.Show("You can only submit letters!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                char letter = textBox1.Text.ToLower().ToCharArray()[0];
+                if (!char.IsLetter(letter))
+                {
+                    MessageBox.Show("You can only submit letters!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (word.Contains(letter)) //Van ilyen betu a szoban?
+                {
+                    char[] letters = word.ToCharArray(); //A szoban levo osszes betu, karaktertombben
+                                                         //Menjunk vegig a szo karakterein, nezzuk meg, melyik helyen allnak ilyen betuk
+                    for (int i = 0; i < letters.Length; i++)
+                    {
+                        if (letters[i] == letter)
+                            labels[i].Text = letters[i].ToString();
+                    }
+                    foreach (Label l in labels)                    
+                        if (l.Text == "_") return; //Ha meg vannak ismeretlen betuk
+                    MessageBox.Show("You have won!", "Congrats");
+                    ResetGame();
+                }
+                else
+                {
+                    MessageBox.Show("The letter that you guessed isn't in the word!", "Sorry");
+                    label2.Text += letter + ", ";
+                    DrawBodyPart((BodyParts)amountOfMissedLetters);
+                    amountOfMissedLetters++;
+                    if (amountOfMissedLetters == 9) //8 reszbol all az ember
+                    {
+                        MessageBox.Show("Sorry, but you lost! The word was: " + word);
+                        ResetGame();
+                    }                    
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please submit a letter!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
 
-            if (word.Contains(letter)) //Van ilyen betu a szoban?
+        void ResetGame()
+        {
+            Graphics g = panel1.CreateGraphics();
+            g.Clear(panel1.BackColor);
+            //GetRandomWord();
+            MakeLabels();
+            DrawHangPost();            
+            label2.Text = "Missed: ";
+            textBox1.Text = string.Empty;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (textBox2.Text == word)
             {
-                char[] letters = word.ToCharArray(); //A szoban levo osszes betu, karaktertombben
-                //Menjunk vegig a szo karakterein, nezzuk meg, melyik helyen allnak ilyen betuk
-                for (int i = 0; i < letters.Length; i++)
+                MessageBox.Show("You have won!", "Congrats");
+                ResetGame();
+            }
+            else
+            {
+                MessageBox.Show("The word you guessed is wrong!", "Sorry");
+                DrawBodyPart((BodyParts)amountOfMissedLetters);
+                amountOfMissedLetters++;
+
+                if (amountOfMissedLetters == 9) //8 reszbol all az ember
                 {
-                    if (letters[i] == letter)
-                        labels[i].Text = letters[i].ToString();
+                    MessageBox.Show("Sorry, but you lost! The word was: " + word);
+                    ResetGame();
                 }
             }
         }
