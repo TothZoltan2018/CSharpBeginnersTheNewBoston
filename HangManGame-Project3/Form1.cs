@@ -73,9 +73,9 @@ namespace HangManGame_Project3
         }
 
         void MakeLabels()
-        {
+        {            
             word = GetRandomWord();
-            char[] chars = word.ToCharArray(); //A vegen van meg egy '\n' is.
+            char[] chars = word.ToCharArray();
             int between = groupBox2.Width / chars.Length - 1;
             for (int i = 0; i < chars.Length; i++)
             {
@@ -84,7 +84,7 @@ namespace HangManGame_Project3
                 labels[i].Text = "_";
                 labels[i].Parent = groupBox2;
                 labels[i].BringToFront();
-                labels[i].CreateControl();
+               //labels[i].CreateControl();
             }
             label1.Text = "Word Length: " + (chars.Length).ToString();
         }
@@ -121,7 +121,7 @@ namespace HangManGame_Project3
                     MessageBox.Show("You can only submit letters!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
+                textBox1.Text = string.Empty;
                 if (word.Contains(letter)) //Van ilyen betu a szoban?
                 {
                     char[] letters = word.ToCharArray(); //A szoban levo osszes betu, karaktertombben
@@ -133,21 +133,14 @@ namespace HangManGame_Project3
                     }
                     foreach (Label l in labels)                    
                         if (l.Text == "_") return; //Ha meg vannak ismeretlen betuk
-                    MessageBox.Show("You have won!", "Congrats");
-                    ResetGame();
+
+                    EndOfGame("You have won!", "Congrats");                    
                 }
                 else
                 {
-                    MessageBox.Show("The letter that you guessed isn't in the word!", "Sorry");
                     label2.Text += letter + ", ";
-                    DrawBodyPart((BodyParts)amountOfMissedLetters);
-                    amountOfMissedLetters++;
-                    if (amountOfMissedLetters == 9) //8 reszbol all az ember
-                    {
-                        MessageBox.Show("Sorry, but you lost! The word was: " + word);
-                        ResetGame();
-                    }                    
-                }
+                    DisplayResultOfWrongAnswer("The letter that you guessed isn't in the word!", "Sorry");
+                }                
             }
             else
             {
@@ -165,27 +158,51 @@ namespace HangManGame_Project3
             DrawHangPost();            
             label2.Text = "Missed: ";
             textBox1.Text = string.Empty;
+            amountOfMissedLetters = 0;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             if (textBox2.Text == word)
             {
-                MessageBox.Show("You have won!", "Congrats");
-                ResetGame();
+                EndOfGame("You have won!", "Congrats");                
             }
             else
             {
-                MessageBox.Show("The word you guessed is wrong!", "Sorry");
-                DrawBodyPart((BodyParts)amountOfMissedLetters);
-                amountOfMissedLetters++;
-
-                if (amountOfMissedLetters == 9) //8 reszbol all az ember
-                {
-                    MessageBox.Show("Sorry, but you lost! The word was: " + word);
-                    ResetGame();
-                }
+                DisplayResultOfWrongAnswer("The word you guessed is wrong!", "Sorry");
             }
+        }
+
+        private void DisplayResultOfWrongAnswer(string message, string caption)
+        {
+            MessageBox.Show(message, caption);
+            DrawBodyPart((BodyParts)amountOfMissedLetters);
+            amountOfMissedLetters++;
+            CheckIfBodyisReady();
+        }
+
+        private void CheckIfBodyisReady()
+        {
+            if (amountOfMissedLetters == 9) //8 reszbol all az ember
+            {
+                EndOfGame("Sorry, but you lost! The word was: " + word, "Sorry");                
+            }
+        }
+
+        void EndOfGame(string message, string caption)
+        {
+            MessageBox.Show(message, caption);
+            ResetGame();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) button1_Click(sender, e);            
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) button2_Click(sender, e);
         }
     }
 }
