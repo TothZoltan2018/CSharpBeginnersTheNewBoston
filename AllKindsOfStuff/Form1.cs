@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace AllKindsOfStuff
 {
-    //Part153 - Ref and Out Keywords
+    //Part166 - Optional Parameters
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,16 +22,34 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int age = 3; //A ref valtozonak erteket kell adni
-            string Name; //Az out valtozonak nem kell
-            Modify(ref age, out Name);
-            MessageBox.Show(age.ToString() + ", " + Name);
+            // 1. Method overloading
+            ShowMessage("Only one param");
+            ShowMessage("Two params", "some title");
+
+            //2. Dwfault values
+            ShowMessage2("Only one param");
+            ShowMessage2("Two params", "own title");
+            ShowMessage2("Three params", "own title", 3);
         }
 
-        void Modify(ref int age, out string Name)
+        //1.
+        void ShowMessage(string message, string title)
         {
-            age += 5;
-            Name = "Zolika";
+            MessageBox.Show(message, title);
         }
+
+        void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        //2. (//Az opcionalis parameter(ek) az utolsok lehetnek csak.)
+        void ShowMessage2(string message, string title = "Default value", int amount = 0) 
+        {
+            for (int i = 0; i < amount; i++)
+                MessageBox.Show(message, title);                     
+        }
+
+
     }
 }
