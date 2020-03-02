@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Threading;
-
+using System.Collections;//
 namespace AllKindsOfStuff
 {
-    //Part166 - Optional Parameters
+    //Part167 - IEnumerable and Yield Return
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,34 +22,43 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // 1. Method overloading
-            ShowMessage("Only one param");
-            ShowMessage("Two params", "some title");
+            foreach (int i in GetNumbers(0, 10))
+            {
+                if (i >= 6) break;
+                textBox1.Text += i.ToString() + ", ";                
+            }
 
-            //2. Dwfault values
-            ShowMessage2("Only one param");
-            ShowMessage2("Two params", "own title");
-            ShowMessage2("Three params", "own title", 3);
+            foreach (int i in GetNumbers2())
+            {
+                if (i >= 6) break;                
+                textBox2.Text += i.ToString() + ", ";
+            }
+
+            foreach (var item in GetNumbers2())
+            {
+                textBox3.Text += item.ToString() + ", ";
+            }            
         }
 
-        //1.
-        void ShowMessage(string message, string title)
+        //A fgv nem fog min-tol max-1-ig mindig lefutni, hanem a hivaskor egyet iteral.
+        //Teljesitmenytakarekos, csak annyit szamol, amennyit a hivas helyen felhasznalunk.
+        IEnumerable GetNumbers(int min, int max)
         {
-            MessageBox.Show(message, title);
+            for (; min <= max; min+=2)
+            {
+                yield return min;
+            }
         }
-
-        void ShowMessage(string message)
+        //Ugyanaz, mint fent. Minden hivaskor visszaadja a kovetkezo integert.
+        IEnumerable GetNumbers2()
         {
-            MessageBox.Show(message);
+            yield return 0;
+            yield return 2;
+            yield return 4;
+            yield return 6;
+            yield return 8;
+            yield return 10;
         }
-
-        //2. (//Az opcionalis parameter(ek) az utolsok lehetnek csak.)
-        void ShowMessage2(string message, string title = "Default value", int amount = 0) 
-        {
-            for (int i = 0; i < amount; i++)
-                MessageBox.Show(message, title);                     
-        }
-
 
     }
 }
