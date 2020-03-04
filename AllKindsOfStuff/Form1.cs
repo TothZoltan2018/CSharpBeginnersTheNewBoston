@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Collections;//
+using System.Collections;
+
 namespace AllKindsOfStuff
 {
-    //Part167 - IEnumerable and Yield Return
+    //Part168 - Make a Class for a Foreach Loop
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,43 +23,41 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach (int i in GetNumbers(0, 10))
-            {
-                if (i >= 6) break;
-                textBox1.Text += i.ToString() + ", ";                
-            }
-
-            foreach (int i in GetNumbers2())
-            {
-                if (i >= 6) break;                
-                textBox2.Text += i.ToString() + ", ";
-            }
-
-            foreach (var item in GetNumbers2())
-            {
-                textBox3.Text += item.ToString() + ", ";
-            }            
+            MyCollection mc = new MyCollection("Zoli");
+            foreach (string name in mc)
+                MessageBox.Show(name);
         }
+    }
 
-        //A fgv nem fog min-tol max-1-ig mindig lefutni, hanem a hivaskor egyet iteral.
-        //Teljesitmenytakarekos, csak annyit szamol, amennyit a hivas helyen felhasznalunk.
-        IEnumerable GetNumbers(int min, int max)
+    class MyCollection : IEnumerable, IEnumerator
+    {
+        int position = -1;
+        List<string> names = new List<string>();
+        public MyCollection(string name)
         {
-            for (; min <= max; min+=2)
-            {
-                yield return min;
-            }
-        }
-        //Ugyanaz, mint fent. Minden hivaskor visszaadja a kovetkezo integert.
-        IEnumerable GetNumbers2()
-        {
-            yield return 0;
-            yield return 2;
-            yield return 4;
-            yield return 6;
-            yield return 8;
-            yield return 10;
+            names.Add(name);
         }
 
+        public object Current
+        {
+            get { return names[position]; }
+        }
+        
+
+        public IEnumerator GetEnumerator()
+        {
+            return (IEnumerator)this;
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < names.Count);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
     }
 }
