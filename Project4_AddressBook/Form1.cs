@@ -8,15 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;//
 
 namespace Project4_AddressBook
 {
-    //Part 169, 170, 171, 172 - Project 4 Address Book
+    //Part 169, 170, 171, 172, 173 - Project 4 Address Book
     //A listView1-en a view-t "list"-re kell allitani
     //A Form property-k kozott ki kell valasztani a ContextMenuStrip1-et
     public partial class Form1 : Form
     {
         List<Person> people = new List<Person>();
+        string path = string.Empty;
 
         public Form1()
         {
@@ -25,7 +27,7 @@ namespace Project4_AddressBook
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             if (!Directory.Exists(path + "\\AddressBook Project - Zoli"))
                 Directory.CreateDirectory(path + "\\AddressBook Project - Zoli");
 
@@ -52,16 +54,15 @@ namespace Project4_AddressBook
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Nem vilagos, miert, de eloszor nincs elem a SelectedItems-ben, ezert az if nelkul a kovetkezo
-            //sorban kivetlet dobna.
+            //sorban kivetelt dobna.
             if (listView1.SelectedItems.Count == 0) return;
             //SelectedItems[0] - csak egy elemet lehet kivalasztani egyszerre.
-            //A property-ben be lehet allitani, hogy tobbrt, igy mar ertelmes az indexeles
+            //A property-ben be lehet allitani, hogy tobb, igy mar ertelmes az indexeles
             textBox1.Text = people[listView1.SelectedItems[0].Index].Name;
             textBox2.Text = people[listView1.SelectedItems[0].Index].Email;
             textBox3.Text = people[listView1.SelectedItems[0].Index].StreetAddress;
             textBox4.Text = people[listView1.SelectedItems[0].Index].AdditionalNotes;
             dateTimePicker1.Value = people[listView1.SelectedItems[0].Index].Birthday;
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -95,6 +96,21 @@ namespace Project4_AddressBook
             public DateTime Birthday { get; set; }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0 || people.Count == 0) return;
+            people[listView1.SelectedItems[0].Index].Name = textBox1.Text;
+            people[listView1.SelectedItems[0].Index].Email = textBox2.Text;
+            people[listView1.SelectedItems[0].Index].StreetAddress = textBox3.Text;
+            people[listView1.SelectedItems[0].Index].AdditionalNotes = textBox4.Text;
+            people[listView1.SelectedItems[0].Index].Birthday = dateTimePicker1.Value;
+            listView1.SelectedItems[0].Text = textBox1.Text;
+        }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path + "\\AddressBook Project - Zoli\\settings.xml");
+        }
     }
 }
