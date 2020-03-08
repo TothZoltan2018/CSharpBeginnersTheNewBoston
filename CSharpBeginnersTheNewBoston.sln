@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangManGame-Project3", "Han
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project4_AddressBook", "Project4_AddressBook\Project4_AddressBook.csproj", "{8D7DBD2B-B6C6-4ABD-BB04-78D794E89910}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 5 Captcha Generator", "Project 5 Captcha Generator\Project 5 Captcha Generator.csproj", "{B2EC5C56-AC31-433A-BF7C-854AC99A626E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{8D7DBD2B-B6C6-4ABD-BB04-78D794E89910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D7DBD2B-B6C6-4ABD-BB04-78D794E89910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D7DBD2B-B6C6-4ABD-BB04-78D794E89910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
