@@ -11,7 +11,7 @@ using System.Security.Cryptography;//
 
 namespace Project_5_Captcha_Generator
 {
-    //Part179, 180, 181, 182 - Project 5 Captcha Generator
+    //Part179, 180, 181, 182, 183, 184 - Project 5 Captcha Generator
     public partial class Form1 : Form
     {
         public Form1()
@@ -20,23 +20,40 @@ namespace Project_5_Captcha_Generator
         }
 
         List<string> strings = new List<string>();
+        Random rnd = new Random();
 
         private void button2_Click(object sender, EventArgs e)
         {
-            GenerateCapthas(0);
+            Image[] images = GenerateCapthas(Convert.ToInt32(textBox1.Text));
+            int g = 0;
+            foreach (Image image in images)
+            {
+                image.Save(label1.Text + "\\" + strings[g] + ".png");
+                g++;
+            }
         }
 
         Image[] GenerateCapthas(int amount)
         {
-            Graphics g = panel1.CreateGraphics();
-            g.Clear(panel1.BackColor);
-            Random rnd = new Random();
+            Image[] images = new Image[amount];
+            
+            for (int i = 0; i < amount; i++)
+            {
+                Bitmap bitmap = new Bitmap(panel1.Width, panel1.Height);
+                Graphics g = Graphics.FromImage(bitmap);//a bitmapra rajzolunk, nem a panel1-re: panel1.CreateGraphics();
+                g.Clear(panel1.BackColor);
+                //Ha ez itt van, akkor nem generalja le az osszes kepet, es vannak koztuk egyformak is.
+                //Ha Sleep(1000), akkor jo. => Ne csinaljunk uj osztalyt mindig, tegyuk ki.
+                //Random rnd = new Random();                
+                string randomString = DrawRandomString(g, rnd);
+                EncodeRandomStringToMd5String(randomString);
+                DrawConfusingShapes(g, rnd);
 
-            string randomString = DrawRandomString(g, rnd);
-            EncodeRandomStringToMd5String(randomString);
-            DrawConfusingShapes(g, rnd);
-
-            return null;
+                panel1.BackgroundImage = bitmap;
+                images[i] = bitmap;
+            }
+            
+            return images;
         }
 
         private void DrawConfusingShapes(Graphics g, Random rnd)
@@ -45,14 +62,14 @@ namespace Project_5_Captcha_Generator
             for (int i = 0; i < 6; i++)
             {
                 int j = rnd.Next(0, 2);
-                if (j == 0) g.DrawRectangle(p, rnd.Next(0, panel1.Size.Width / 2),
-                                            rnd.Next(0, panel1.Size.Height / 2),
-                                            rnd.Next(panel1.Size.Width / 2),
-                                            rnd.Next(0, panel1.Size.Height / 2));
-                else g.DrawEllipse(p, rnd.Next(0, panel1.Size.Width / 2),
-                                            rnd.Next(0, panel1.Size.Height / 2),
-                                            rnd.Next(panel1.Size.Width / 2),
-                                            rnd.Next(0, panel1.Size.Height / 2));
+                if (j == 0) g.DrawRectangle(p, rnd.Next(0, panel1.Width / 2),
+                                            rnd.Next(0, panel1.Height / 2),
+                                            rnd.Next(panel1.Width / 2),
+                                            rnd.Next(0, panel1.Height / 2));
+                else g.DrawEllipse(p, rnd.Next(0, panel1.Width / 2),
+                                            rnd.Next(0, panel1.Height / 2),
+                                            rnd.Next(panel1.Width / 2),
+                                            rnd.Next(0, panel1.Height / 2));
                 p.Color = Color.FromArgb(0xFF, rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
             }
         }
@@ -69,7 +86,7 @@ namespace Project_5_Captcha_Generator
 
             FontFamily ff = new FontFamily("Arial");
             Font f = new System.Drawing.Font(ff, 28);
-            g.DrawString(randomString, f, sb, panel1.Size.Width / 10, panel1.Size.Height / 5);
+            g.DrawString(randomString, f, sb, panel1.Width / 10, panel1.Height / 5);
             return randomString;
         }
 
@@ -85,6 +102,15 @@ namespace Project_5_Captcha_Generator
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             string md5String = BitConverter.ToString(md5.ComputeHash(buffer)).Replace("-", "");// a szokasos .ToString() itt nem jo
             strings.Add(md5String);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fd = new FolderBrowserDialog();
+            if (DialogResult.OK == fd.ShowDialog())
+            {
+                label1.Text = fd.SelectedPath;
+            }
         }
     }
 }
