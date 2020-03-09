@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;//
+using System.IO;//
 
 namespace Project_5_Captcha_Generator
 {
-    //Part179, 180, 181, 182, 183, 184 - Project 5 Captcha Generator
+    //Part179, 180, 181, 182, 183, 184, 185 - Project 5 Captcha Generator, using the images
     public partial class Form1 : Form
     {
         public Form1()
@@ -92,6 +93,12 @@ namespace Project_5_Captcha_Generator
 
         private void EncodeRandomStringToMd5String(string randomString)
         {
+            string md5String = EncodeStringToMd5String(randomString);
+            strings.Add(md5String);
+        }
+
+        private static string EncodeStringToMd5String(string randomString)
+        {
             byte[] buffer = new byte[randomString.Length]; //kell az md5 enkodolashoz
             int y = 0;
             foreach (char c in randomString)
@@ -101,7 +108,7 @@ namespace Project_5_Captcha_Generator
             }
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             string md5String = BitConverter.ToString(md5.ComputeHash(buffer)).Replace("-", "");// a szokasos .ToString() itt nem jo
-            strings.Add(md5String);
+            return md5String;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -111,6 +118,27 @@ namespace Project_5_Captcha_Generator
             {
                 label1.Text = fd.SelectedPath;
             }
+        }
+
+        string md5HashedName = string.Empty;
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.ImageLocation = ofd.FileName;
+                md5HashedName = Path.GetFileNameWithoutExtension(ofd.FileName);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string encodedUserInput = EncodeStringToMd5String(textBox2.Text);
+            if (encodedUserInput != md5HashedName)
+            {
+                MessageBox.Show("Wrong");
+            }
+            else MessageBox.Show("Correct!");
         }
     }
 }
