@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project4_AddressBook", "Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 5 Captcha Generator", "Project 5 Captcha Generator\Project 5 Captcha Generator.csproj", "{B2EC5C56-AC31-433A-BF7C-854AC99A626E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project 6 Reading and Writing Classes", "Project 6 Reading and Writing Classes\Project 6 Reading and Writing Classes.csproj", "{5661B6AE-6FE4-450B-96D7-5B0709747B80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2EC5C56-AC31-433A-BF7C-854AC99A626E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5661B6AE-6FE4-450B-96D7-5B0709747B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5661B6AE-6FE4-450B-96D7-5B0709747B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5661B6AE-6FE4-450B-96D7-5B0709747B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5661B6AE-6FE4-450B-96D7-5B0709747B80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
