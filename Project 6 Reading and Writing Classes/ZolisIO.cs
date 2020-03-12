@@ -7,7 +7,7 @@ using System.IO;//
 
 namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
 {
-    //Part186, 187, 188, 189, 190 - Project 6 Reading and Writing Class
+    //Part186, 187, 188, 189, 190, 191 - Project 6 Reading and Writing Class
     //A BitReader/Writer osztaly Little Endian modon (forditva) kezeli a szamokat.
     //Ezert irjunk egy oszalyt, aminek megadhatjuk, hogy Little v. Big Endian kezelje.
 
@@ -181,7 +181,17 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
                 return Encoding.BigEndianUnicode.GetString(br.ReadBytes(length));
             else
                 return Encoding.Unicode.GetString(br.ReadBytes(length));
-
         }
+
+        public char ReadChar()
+        {
+            return br.ReadChar();
+        }
+
+        public char[] ReadChars(int length)
+        {            
+            return br.ReadChars(length);
+        }
+       
     }
 }

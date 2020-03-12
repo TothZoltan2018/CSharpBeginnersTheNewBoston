@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZolisIO;
 
 namespace Project_6_Reading_and_Writing_Classes
 {
@@ -18,6 +19,16 @@ namespace Project_6_Reading_and_Writing_Classes
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Reader r = new Reader(ofd.FileName);
+                MessageBox.Show(r.ReadInt32().ToString("X"));
+            }
         }
     }
 }
