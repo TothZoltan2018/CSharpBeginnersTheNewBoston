@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;//
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;//
 
 namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
 {
-    //Part186, 187, 188, 189, 190, 191 - Project 6 Reading and Writing Class
+    //Part186, 187, 188, 189, 190, 191, 192, 193 - Project 6 Reading and Writing Class
     //A BitReader/Writer osztaly Little Endian modon (forditva) kezeli a szamokat.
     //Ezert irjunk egy oszalyt, aminek megadhatjuk, hogy Little v. Big Endian kezelje.
 
@@ -26,6 +24,16 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
 
     public class Reader : BaseIO
     {
+        BinaryReader br;
+        /// <summary>
+        /// The position to read at.
+        /// </summary>
+        public long Position
+        {
+            get { return br.BaseStream.Position; }
+            set { br.BaseStream.Position = value; }
+        }
+
         /// <summary>
         /// Create a reader to read a file.
         /// </summary>
@@ -46,18 +54,7 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
             br = new BinaryReader(File.OpenRead(path));
             this.byteOrder = byteOrder;
         }
-
-        BinaryReader br;
-        /// <summary>
-        /// The position to read at.
-        /// </summary>
-        public long Position
-        {
-            get { return br.BaseStream.Position; }
-            set { br.BaseStream.Position = value; }
-        }
-
-        //Todo: A ReadByte-ok nal miert nem kell megforditani a byte-ok sorrendjet?
+        
         /// <summary>
         /// After reading index is incremented.
         /// </summary>
@@ -193,5 +190,88 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
             return br.ReadChars(length);
         }
        
+    }
+
+    public class Writer : BaseIO
+    {
+        BinaryWriter bw;
+
+        public Writer(string path)
+        {
+            bw = new BinaryWriter(File.OpenWrite(path));
+            byteOrder = ByteOrder.BigEndian;            
+        }
+
+        public Writer(string path, ByteOrder bo)
+        {
+            bw = new BinaryWriter(File.OpenWrite(path));
+            byteOrder = bo;
+        }
+
+        public long Position
+        {
+            get { return bw.BaseStream.Position; }
+            set { bw.BaseStream.Position = value; }
+        }
+
+        public void WriteByte(byte toWrite)
+        {
+            bw.Write(toWrite);
+        }
+
+        public void WriteBytes(byte[] bytesToWrite)
+        {
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(bytesToWrite);
+            bw.Write(bytesToWrite);        
+        }
+
+        public void WriteInt16(short toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
+
+        public void WriteUInt16(ushort toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
+
+        public void WriteInt32(int toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
+
+        public void WriteUInt32(uint toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
+
+        public void WriteInt64(long toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
+
+        public void WriteUInt64(ulong toWrite)
+        {
+            byte[] buffer = BitConverter.GetBytes(toWrite);
+            if (byteOrder == ByteOrder.BigEndian)
+                Array.Reverse(buffer);
+            bw.Write(buffer);
+        }
     }
 }
