@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
 {
-    //Part186, 187, 188, 189, 190, 191, 192, 193 - Project 6 Reading and Writing Class
+    //Part186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196 - Project 6 Reading and Writing Class - Ready
     //A BitReader/Writer osztaly Little Endian modon (forditva) kezeli a szamokat.
     //Ezert irjunk egy oszalyt, aminek megadhatjuk, hogy Little v. Big Endian kezelje.
 
@@ -20,6 +20,11 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
         }
 
         protected ByteOrder byteOrder;
+
+        public void ChangeByteOrder(ByteOrder bo)
+        {
+            this.byteOrder = bo;
+        }
     }
 
     public class Reader : BaseIO
@@ -160,11 +165,6 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
             br.Close();
         }
 
-        public void ChangeByteOrder(ByteOrder bo)
-        {
-            this.byteOrder = bo;
-        }
-
         //Todo: Melyik a jobb?
         public string ReadString(int length)
         {
@@ -273,5 +273,35 @@ namespace ZolisIO //Atneveztuk a prject veverol az osztalynevre
                 Array.Reverse(buffer);
             bw.Write(buffer);
         }
+
+        public void WriteString(string toWrite)
+        {
+            //Ha  astringet kozvetlenul kiirnank, akkor az elso byte-ban a string hossza lenne!
+            //Helyette: char[]
+            bw.Write(toWrite.ToCharArray()); //a hossz nem lesz benne az elejen, csak a string ASCII karakterei
+        }
+
+        public void WriteUnicodeString(string toWrite)
+        {
+            byte[] buffer = (byteOrder == ByteOrder.BigEndian) ? Encoding.BigEndianUnicode.GetBytes(toWrite)
+                                                                : Encoding.Unicode.GetBytes(toWrite) ;
+            bw.Write(buffer);
+        }
+
+        public void WriteCharacter(char toWrite)
+        {
+            bw.Write(toWrite);
+        }
+
+        public void WriteCharacters(char[] toWrite)
+        {
+            bw.Write(toWrite); //A char[]-t mindig az ertelemszeru iranyban tarolja. (nincs Little/Big endian kerdes)
+        }
+
+        public void Close()
+        {
+            bw.Close();
+        }
+
     }
 }
