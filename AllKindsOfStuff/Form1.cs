@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace AllKindsOfStuff
 {
-    //Part168 - Make a Class for a Foreach Loop
+    //Part197 - IDisposable pt 1
     public partial class Form1 : Form
     {
         public Form1()
@@ -23,41 +23,21 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MyCollection mc = new MyCollection("Zoli");
-            foreach (string name in mc)
-                MessageBox.Show(name);
+            System.IO.BinaryReader br = new System.IO.BinaryReader(System.IO.File.OpenRead(""));
+            br.Dispose(); //Calls the destructor
         }
     }
 
-    class MyCollection : IEnumerable, IEnumerator
+    class MyClass
     {
-        int position = -1;
-        List<string> names = new List<string>();
-        public MyCollection(string name)
+        public MyClass()
         {
-            names.Add(name);
+            MessageBox.Show("I am the constructor.");
         }
 
-        public object Current
+        ~MyClass()
         {
-            get { return names[position]; }
-        }
-        
-
-        public IEnumerator GetEnumerator()
-        {
-            return (IEnumerator)this;
-        }
-
-        public bool MoveNext()
-        {
-            position++;
-            return (position < names.Count);
-        }
-
-        public void Reset()
-        {
-            position = -1;
+            MessageBox.Show("I am the destructor.");
         }
     }
 }
