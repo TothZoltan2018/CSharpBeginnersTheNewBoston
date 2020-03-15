@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace AllKindsOfStuff
 {
-    //Part198 - IDisposable pt 2
+    //Part199 ICloneable
     public partial class Form1 : Form
     {
         public Form1()
@@ -23,39 +23,31 @@ namespace AllKindsOfStuff
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (MyClass mc = new MyClass())
-            {
-                
-            }//Itt dispozalja az mc objektumot
+            string myName = "Toth Zoli";
+            string clone = (string)myName.Clone();
+            MessageBox.Show(clone);
+
+            MyCLass mc = new MyCLass();
+            mc.Name = "Zoli";
+
+            MyCLass clonedMyClass = (MyCLass)mc.Clone();
+            MessageBox.Show($"clonedMyClass.Name property ({clonedMyClass.Name}) is the same as mc.Name ({mc.Name})? {mc.Name == clonedMyClass.Name} ");
+            MessageBox.Show($"I've just changed the clonedMyClass.Name propery ({clonedMyClass.Name}) to: {clonedMyClass.Name = "Sugi"}");
+            MessageBox.Show($"mc.Name {mc.Name} is also changed to {clonedMyClass.Name}? {mc.Name == clonedMyClass.Name}");
+            //This seems to be the same. What is the sense of the Clone() method???????
+            MyCLass notClonedMyClass = new MyCLass();
+            notClonedMyClass = mc;
+            MessageBox.Show($"notClonedMyClass = mc, notClonedMyClass.Name = mc.Name: {notClonedMyClass.Name} = {mc.Name}? {notClonedMyClass.Name == mc.Name}");
         }
     }
 
-    class MyClass : IDisposable
+    class MyCLass : ICloneable
     {
-        Image i;
-        public MyClass()
-        {
-            i = Image.FromFile(@"C:\Users\ZoliRege\Documents\7AB6683EEA48580398F2ECD1E3B74964.png");
-        }
+        public string Name { get; set; }
 
-        //Ezt hivja a using blokk
-        public void Dispose()
+        public object Clone()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this); //A destruktora nem lesz meghivva
-        }
-
-        protected virtual void Dispose(bool b)
-        {
-            if (b)
-            {
-                i.Dispose();
-            }
-        }
-
-        ~MyClass()
-        {
-            MessageBox.Show("Engem soha nem hivnak meg, a \" GC.SuppressFinalize(this);\" sor miatt!");
+            return this;
         }
     }
 }
